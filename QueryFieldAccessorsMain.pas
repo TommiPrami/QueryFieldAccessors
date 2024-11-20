@@ -33,11 +33,11 @@ type
     FDQuery1_z0: TFloatField;
     FDQuery2: TFDQuery;
     FDQuery2cnt: TLargeintField;
-    ListBox3: TListBox;
+    ListBoxData: TListBox;
     MemoLog: TMemo;
-    Panel1: TPanel;
-    SpinEdit1: TSpinEdit;
-    Splitter1: TSplitter;
+    PanelButtons: TPanel;
+    SpinEditRowCount: TSpinEdit;
+    SplitterLog: TSplitter;
     procedure btnDesignTimeFieldsClick(Sender: TObject);
     procedure btnFieldByNameClick(Sender: TObject);
     procedure btnFieldReferencesClick(Sender: TObject);
@@ -136,7 +136,7 @@ begin
           Sqr(FDQuery1.FieldByName('z0').AsFloat));
 
       if calcDist > 1000 then
-        ListBox3.Items.Add(FDQuery1.FieldByName('Name').AsString);
+        ListBoxData.Items.Add(FDQuery1.FieldByName('Name').AsString);
 
       FDQuery1.Next;
     end;
@@ -157,7 +157,7 @@ begin
           Sqr(FDQuery1.Fields[4].AsFloat));
 
       if calcDist > 1000 then
-        ListBox3.Items.Add(FDQuery1.Fields[1].AsString);
+        ListBoxData.Items.Add(FDQuery1.Fields[1].AsString);
 
       FDQuery1.Next;
     end;
@@ -176,9 +176,9 @@ begin
     FDMemTable1.Close;
     FDMemTable1.CreateDataSet;
 
-    for var i := 1 to SpinEdit1.Value do
+    for var Index := 1 to SpinEditRowCount.Value do
       FDMemTable1.InsertRecord(
-        [i, GenerateStarName,
+        [Index, GenerateStarName,
          random * Random(900),
          random * Random(900),
          random * Random(900)]);
@@ -213,7 +213,7 @@ begin
           Sqr(z0_field.AsFloat));
 
       if calcDist > 1000 then
-        ListBox3.Items.Add(name_field.AsString);
+        ListBoxData.Items.Add(name_field.AsString);
 
       FDQuery1.Next;
     end;
@@ -234,7 +234,7 @@ begin
           Sqr(FDQuery1_z0.AsFloat));
 
       if calcDist > 1000 then
-        ListBox3.Items.Add(FDQuery1_Name.AsString);
+        ListBoxData.Items.Add(FDQuery1_Name.AsString);
 
       FDQuery1.Next;
     end;
@@ -249,11 +249,11 @@ begin
 
   FDQuery1.Close;
 
-  Log('Count: ' + ListBox3.Count.ToString, 1);
+  Log('Count: ' + ListBoxData.Count.ToString, 1);
   Log('Elapsed time: ' + FormatFloat('#,##0.00 ms', FStopWatch.Elapsed.Milliseconds), 1);
   Log('-----');
 
-  ListBox3.Items.EndUpdate;
+  ListBoxData.Items.EndUpdate;
 end;
 
 procedure TForm1.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
@@ -291,10 +291,10 @@ procedure TForm1.StartTimer(Sender: TObject);
 begin
   FDQuery1.Open;
 
-  ListBox3.Clear;
+  ListBoxData.Clear;
   Log((Sender as TButton).Caption);
 
-  ListBox3.Items.BeginUpdate;
+  ListBoxData.Items.BeginUpdate;
 
   FStopWatch := TStopwatch.StartNew;
 end;

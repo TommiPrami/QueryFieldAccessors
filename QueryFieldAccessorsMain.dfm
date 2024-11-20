@@ -2,8 +2,8 @@ object Form1: TForm1
   Left = 0
   Top = 0
   Caption = 'Query Field Accessors Demonstration'
-  ClientHeight = 407
-  ClientWidth = 863
+  ClientHeight = 487
+  ClientWidth = 965
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -13,87 +13,92 @@ object Form1: TForm1
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   TextHeight = 15
-  object Splitter1: TSplitter
+  object SplitterLog: TSplitter
     Left = 513
     Top = 0
-    Height = 407
+    Height = 487
   end
-  object ListBox3: TListBox
+  object ListBoxData: TListBox
     Left = 124
     Top = 0
     Width = 389
-    Height = 407
+    Height = 487
     Align = alLeft
     ItemHeight = 15
     TabOrder = 1
   end
-  object Panel1: TPanel
+  object PanelButtons: TPanel
     Left = 0
     Top = 0
     Width = 124
-    Height = 407
+    Height = 487
     Align = alLeft
     BevelOuter = bvNone
     Caption = ' '
     TabOrder = 0
-    DesignSize = (
-      124
-      407)
     object btnDesignTimeFields: TButton
-      Left = 8
-      Top = 354
-      Width = 105
+      AlignWithMargins = True
+      Left = 3
+      Top = 170
+      Width = 118
       Height = 49
-      Anchors = [akLeft, akBottom]
+      Align = alTop
       Caption = 'Design Time Ref'
       TabOrder = 5
       OnClick = btnDesignTimeFieldsClick
     end
     object btnFieldByName: TButton
-      Left = 8
-      Top = 298
-      Width = 105
+      AlignWithMargins = True
+      Left = 3
+      Top = 114
+      Width = 118
       Height = 50
-      Anchors = [akLeft, akBottom]
+      Align = alTop
       Caption = 'FieldByName'
       TabOrder = 4
       OnClick = btnFieldByNameClick
     end
     object btnFieldReferences: TButton
-      Left = 8
-      Top = 188
-      Width = 105
+      AlignWithMargins = True
+      Left = 3
+      Top = 3
+      Width = 118
       Height = 49
-      Anchors = [akLeft, akBottom]
+      Align = alTop
       Caption = 'Pre-reference'
       TabOrder = 2
       OnClick = btnFieldReferencesClick
     end
     object btnGenerate: TButton
-      Left = 8
-      Top = 8
-      Width = 105
+      AlignWithMargins = True
+      Left = 3
+      Top = 413
+      Width = 118
       Height = 41
+      Align = alBottom
       Caption = 'Generate Random Data'
       TabOrder = 0
       WordWrap = True
       OnClick = btnGenerateClick
     end
     object btnIndexedFields: TButton
-      Left = 8
-      Top = 243
-      Width = 105
+      AlignWithMargins = True
+      Left = 3
+      Top = 58
+      Width = 118
       Height = 50
-      Anchors = [akLeft, akBottom]
+      Align = alTop
       Caption = 'Fields[index]'
       TabOrder = 3
       OnClick = btnIndexedFieldsClick
     end
-    object SpinEdit1: TSpinEdit
-      Left = 8
-      Top = 55
-      Width = 105
+    object SpinEditRowCount: TSpinEdit
+      AlignWithMargins = True
+      Left = 3
+      Top = 460
+      Width = 118
       Height = 24
+      Align = alBottom
       MaxValue = 5000000
       MinValue = 1000
       TabOrder = 1
@@ -103,8 +108,8 @@ object Form1: TForm1
   object MemoLog: TMemo
     Left = 516
     Top = 0
-    Width = 347
-    Height = 407
+    Width = 449
+    Height = 487
     Align = alClient
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
