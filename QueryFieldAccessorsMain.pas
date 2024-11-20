@@ -66,14 +66,14 @@ uses
   System.Math;
 
 const
-  C_SampleData = '..\..\QueryFieldData.db';
+  DATABASE_FILENAME = '..\..\QueryFieldData.db';
 
-function GenerateAlienText(CharCount: Integer): string;
+function GenerateAlienText(const ACharCount: Integer): string;
 const
-  AlienAlphabets: array[0..1] of string = (
+  ALIEN_ALPHABETS: array[0..1] of string = (
     '⏣⎌⛫⎋⎉⎅⎇⎀⎁⏢⏦⏧⏥⏠⏞⏜⏛⏚⏕⎔⎊⎉⌽⍙⍘⍗⍖⍕⍔⛶⛕⛖⛋⛌⛍⛐⛒⛣⌤⌙⌭⌮⌯⌰⌱⌲⌳⌴',
     '░▒▓█♡♥♦♣♠▪▫➢∞✩✪✫✬✭✮✯✰⁂⌘ૐ࿃࿄࿅࿆࿇࿈࿉࿊࿋࿇࿈࿎࿏࿐࿑࿒࿓࿔᠀᠁᠂᠃᠄᠅᠆᠇᠈᠉᠊᠋᠌᠍᠎᠏᠐᠑᠒᠓᠔᠕᠖᠗᠘᠙');
-  AlienAlphabet3Codes: array[0..49] of Word = (
+  ALIEN_ALPHABET_3CODES: array[0..49] of Word = (
       $2591, $2592, $2593, $2588, $2580, $2584, $258C, $2590, $25A0, $25A1,  // Block Elements
       $25CB, $25CF, $25C6, $25D8, $25D9, $2665, $2660, $2666, $2663, $2605,  // Geometric Shapes and Misc. Symbols
       $2701, $2702, $2703, $2704, $2706, $2707, $2708, $2709, $2710, $2711,  // Dingbats
@@ -82,46 +82,49 @@ const
     );
 
 begin
-  var ChosenAlphabetIndex := Random(3);
-
   Result := '';
-  for var i := 1 to CharCount do
-  case ChosenAlphabetIndex of
-    0,1:  Result := Result + AlienAlphabets[ChosenAlphabetIndex][Random(Length(AlienAlphabets[ChosenAlphabetIndex])) + 1];
-    2:  Result := Result + Chr(AlienAlphabet3Codes[random(Length(AlienAlphabet3Codes))]);
+
+  var LChosenAlphabetIndex := Random(3);
+
+  for var LIndex := 1 to ACharCount do
+  case LChosenAlphabetIndex of
+    0,1: Result := Result + ALIEN_ALPHABETS[LChosenAlphabetIndex][Random(Length(ALIEN_ALPHABETS[LChosenAlphabetIndex])) + 1];
+    2: Result := Result + Chr(ALIEN_ALPHABET_3CODES[Random(Length(ALIEN_ALPHABET_3CODES))]);
   end;
 end;
 
 function GenerateStarName: string;
 const
-  Prefixes: array[0..9] of string = ('Alpha', 'Beta', 'Gamma', 'Delta', 'Epsilon', 'Zeta', 'Eta', 'Theta', 'Iota', 'Kappa');
-  Suffixes: array[0..9] of string = ('Prime', 'Major', 'Minor', 'Nebula', 'Abyss', 'Nexus', 'Forge', 'Sentinel', 'Crucible', 'Beacon');
-  Constellations: array[0..9] of string = ('Cygnus', 'Orion', 'Draco', 'Ursa Major', 'Ursa Minor', 'Lyra', 'Aquila', 'Cassiopeia', 'Pegasus', 'Hydra');
-  ScifiThemes: array[0..9] of string = ('Sol Invictus', 'Terra Nova', 'Eden Prime', 'Arcturus Station', 'Luminara', 'Xandar', 'Krypton', 'Vega Prime', 'Reach', 'New Eden');
+  PREFIXES: array[0..9] of string = ('Alpha', 'Beta', 'Gamma', 'Delta', 'Epsilon', 'Zeta', 'Eta', 'Theta', 'Iota', 'Kappa');
+  SUFFIXES: array[0..9] of string = ('Prime', 'Major', 'Minor', 'Nebula', 'Abyss', 'Nexus', 'Forge', 'Sentinel', 'Crucible', 'Beacon');
+  CONSTELLATIONS: array[0..9] of string = ('Cygnus', 'Orion', 'Draco', 'Ursa Major', 'Ursa Minor', 'Lyra', 'Aquila', 'Cassiopeia', 'Pegasus', 'Hydra');
+  SCIFI_THEMES: array[0..9] of string = ('Sol Invictus', 'Terra Nova', 'Eden Prime', 'Arcturus Station', 'Luminara', 'Xandar', 'Krypton', 'Vega Prime', 'Reach', 'New Eden');
 begin
-  var Prefix := Prefixes[Random(Length(Prefixes))];
-  var Suffix := Suffixes[Random(Length(Suffixes))];
-  var NumberString := '';
+  var LPrefix := PREFIXES[Random(Length(PREFIXES))];
+  var LSuffix := SUFFIXES[Random(Length(SUFFIXES))];
+  var LNumberString := '';
 
-  if random(4) = 0 then
-    Exit(GenerateAlienText(Random(20)+5));
+  if Random(4) = 0 then
+    Exit(GenerateAlienText(Random(20) + 5));
 
   if Random(3) = 0 then
-    NumberString := IntToStr(Random(1000)); // Random number between 0 and 999
+    LNumberString := IntToStr(Random(1000)); // Random number between 0 and 999
 
-  Prefix := Prefix + NumberString;
+  LPrefix := LPrefix + LNumberString;
 
   if Random(2) = 0 then
   begin
-    var ConstellationOrTheme: String;
-    if Random(2) = 0 then
-      ConstellationOrTheme := ScifiThemes[Random(Length(ScifiThemes))]
-    else
-      ConstellationOrTheme := Constellations[Random(Length(Constellations))];
+    var LConstellationOrTheme: string;
 
-    Result := Prefix + ' ' + Suffix + ' (' + ConstellationOrTheme + ')';
-  end else
-   Result := Prefix + ' ' + Suffix;
+    if Random(2) = 0 then
+      LConstellationOrTheme := SCIFI_THEMES[Random(Length(SCIFI_THEMES))]
+    else
+      LConstellationOrTheme := CONSTELLATIONS[Random(Length(CONSTELLATIONS))];
+
+    Result := LPrefix + ' ' + LSuffix + ' (' + LConstellationOrTheme + ')';
+  end
+  else
+   Result := LPrefix + ' ' + LSuffix;
 end;
 
 procedure TForm1.btnFieldByNameClick(Sender: TObject);
@@ -181,7 +184,7 @@ begin
          Random * Random(900),
          Random * Random(900)]);
 
-    FDMemTable.SaveToFile(C_SampleData, sfBinary);
+    FDMemTable.SaveToFile(DATABASE_FILENAME, sfBinary);
     FDLocalSQL.Active := True;
 
     FDQueryData.Open; // pre-cache
@@ -270,9 +273,9 @@ begin
 
   Screen.Cursor := crHourGlass;
   try
-    if FileExists(C_SampleData) then
+    if FileExists(DATABASE_FILENAME) then
     begin
-      FDMemTable.LoadFromFile(C_SampleData,sfBinary);
+      FDMemTable.LoadFromFile(DATABASE_FILENAME, sfBinary);
 
       FDQueryData.Open; // pre-cache
       FDQueryData2.Open;
