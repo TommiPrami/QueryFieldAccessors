@@ -3,7 +3,7 @@ object Form1: TForm1
   Top = 0
   Caption = 'Query Field Accessors Demonstration'
   ClientHeight = 407
-  ClientWidth = 539
+  ClientWidth = 863
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -14,29 +14,14 @@ object Form1: TForm1
   OnCreate = FormCreate
   TextHeight = 15
   object Splitter1: TSplitter
-    Left = 329
+    Left = 513
     Top = 0
     Height = 407
-  end
-  object ListBox2: TListBox
-    Left = 332
-    Top = 0
-    Width = 207
-    Height = 407
-    Align = alClient
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -16
-    Font.Name = 'Segoe UI'
-    Font.Style = []
-    ItemHeight = 21
-    ParentFont = False
-    TabOrder = 2
   end
   object ListBox3: TListBox
     Left = 124
     Top = 0
-    Width = 205
+    Width = 389
     Height = 407
     Align = alLeft
     ItemHeight = 15
@@ -114,6 +99,20 @@ object Form1: TForm1
       TabOrder = 1
       Value = 100000
     end
+  end
+  object MemoLog: TMemo
+    Left = 516
+    Top = 0
+    Width = 347
+    Height = 407
+    Align = alClient
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -15
+    Font.Name = 'Courier New'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 2
   end
   object FDQuery1: TFDQuery
     Connection = FDConnection1
