@@ -130,12 +130,12 @@ begin
   try
     while not FDQueryData.Eof do
     begin
-      var calcDist := Sqrt(
+      var LCalculatedDistance := Sqrt(
           Sqr(FDQueryData.FieldByName('x0').AsFloat) +
           Sqr(FDQueryData.FieldByName('y0').AsFloat) +
           Sqr(FDQueryData.FieldByName('z0').AsFloat));
 
-      if calcDist > 1000 then
+      if LCalculatedDistance > 1000.00 then
         ListBoxData.Items.Add(FDQueryData.FieldByName('Name').AsString);
 
       FDQueryData.Next;
@@ -151,12 +151,12 @@ begin
   try
     while not FDQueryData.Eof do
     begin
-      var calcDist := Sqrt(
+      var LCalculatedDistance := Sqrt(
           Sqr(FDQueryData.Fields[2].AsFloat) +
           Sqr(FDQueryData.Fields[3].AsFloat) +
           Sqr(FDQueryData.Fields[4].AsFloat));
 
-      if calcDist > 1000 then
+      if LCalculatedDistance > 1000.00 then
         ListBoxData.Items.Add(FDQueryData.Fields[1].AsString);
 
       FDQueryData.Next;
@@ -205,12 +205,12 @@ begin
 
     while not FDQueryData.Eof do
     begin
-      var calcDist := Sqrt(
+      var LCalculatedDistance := Sqrt(
           Sqr(x0_field.AsFloat) +
           Sqr(y0_field.AsFloat) +
           Sqr(z0_field.AsFloat));
 
-      if calcDist > 1000 then
+      if LCalculatedDistance > 1000.00 then
         ListBoxData.Items.Add(name_field.AsString);
 
       FDQueryData.Next;
@@ -226,12 +226,12 @@ begin
   try
     while not FDQueryData.Eof do
     begin
-      var calcDist := Sqrt(
+      var LCalculatedDistance := Sqrt(
           Sqr(FDQueryData_x0.AsFloat) +
           Sqr(FDQueryData_y0.AsFloat) +
           Sqr(FDQueryData_z0.AsFloat));
 
-      if calcDist > 1000 then
+      if LCalculatedDistance > 1000.00 then
         ListBoxData.Items.Add(FDQueryData_Name.AsString);
 
       FDQueryData.Next;
