@@ -38,6 +38,7 @@ type
     PanelButtons: TPanel;
     SpinEditRowCount: TSpinEdit;
     SplitterLog: TSplitter;
+    TimerAfterShow: TTimer;
     procedure btnDesignTimeFieldsClick(Sender: TObject);
     procedure btnFieldByNameClick(Sender: TObject);
     procedure btnFieldReferencesClick(Sender: TObject);
@@ -45,11 +46,12 @@ type
     procedure btnIndexedFieldsClick(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormCreate(Sender: TObject);
+    procedure TimerAfterShowTimer(Sender: TObject);
   strict private
     { Private declarations }
     FStopWatch: TStopWatch;
     procedure Log(const ALogMessage: string; const AIndent: Integer = 0);
-    procedure StartTimer(Sender: TObject);
+    procedure StartTimer(const ASender: TObject);
     procedure EndTimer;
   public
     { Public declarations }
@@ -190,7 +192,7 @@ begin
     FDQueryData.Open; // pre-cache
     FDQueryData2.Open;
 
-    Log(FormatFloat('#,##0', FDQueryData2cnt.AsInteger) + ' records generated', 1);
+    Log(FormatFloat('#,##0', SpinEditRowCount.Value) + ' records generated', 1);
   finally
     Screen.Cursor := crDefault;
     Enabled := True;
@@ -270,6 +272,28 @@ end;
 procedure TForm1.FormCreate(Sender: TObject);
 begin
   Randomize;
+end;
+
+procedure TForm1.Log(const ALogMessage: string; const AIndent: Integer);
+begin
+  MemoLog.Lines.Add(StringOfChar(' ', AIndent * 2) + ALogMessage);
+end;
+
+procedure TForm1.StartTimer(const ASender: TObject);
+begin
+  FDQueryData.Open;
+
+  ListBoxData.Clear;
+  Log((ASender as TButton).Caption);
+
+  ListBoxData.Items.BeginUpdate;
+
+  FStopWatch := TStopwatch.StartNew;
+end;
+
+procedure TForm1.TimerAfterShowTimer(Sender: TObject);
+begin
+  TimerAfterShow.Enabled := False;
 
   Screen.Cursor := crHourGlass;
   try
@@ -288,23 +312,6 @@ begin
   finally
     Screen.Cursor := crDefault;
   end;
-end;
-
-procedure TForm1.Log(const ALogMessage: string; const AIndent: Integer);
-begin
-  MemoLog.Lines.Add(StringOfChar(' ', AIndent * 2) + ALogMessage);
-end;
-
-procedure TForm1.StartTimer(Sender: TObject);
-begin
-  FDQueryData.Open;
-
-  ListBoxData.Clear;
-  Log((Sender as TButton).Caption);
-
-  ListBoxData.Items.BeginUpdate;
-
-  FStopWatch := TStopwatch.StartNew;
 end;
 
 end.

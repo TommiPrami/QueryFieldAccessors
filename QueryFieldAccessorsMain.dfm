@@ -237,4 +237,10 @@ object Form1: TForm1
       ReadOnly = True
     end
   end
+  object TimerAfterShow: TTimer
+    Interval = 10
+    OnTimer = TimerAfterShowTimer
+    Left = 296
+    Top = 320
+  end
 end
