@@ -119,39 +119,39 @@ object Form1: TForm1
     ParentFont = False
     TabOrder = 2
   end
-  object FDQuery1: TFDQuery
-    Connection = FDConnection1
+  object FDQueryData: TFDQuery
+    Connection = FDConnection
     SQL.Strings = (
       'select id, name, x0, y0, z0'
       'from starData'
       'order by id')
     Left = 160
     Top = 80
-    object FDQuery1_id: TLargeintField
+    object FDQueryData_id: TLargeintField
       FieldName = 'id'
       Origin = 'id'
       ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
     end
-    object FDQuery1_name: TWideStringField
+    object FDQueryData_name: TWideStringField
       DisplayLabel = 'name'
       FieldName = 'Name'
       Required = True
       Size = 1024
     end
-    object FDQuery1_x0: TFloatField
+    object FDQueryData_x0: TFloatField
       FieldName = 'x0'
       Origin = 'x0'
     end
-    object FDQuery1_y0: TFloatField
+    object FDQueryData_y0: TFloatField
       FieldName = 'y0'
       Origin = 'y0'
     end
-    object FDQuery1_z0: TFloatField
+    object FDQueryData_z0: TFloatField
       FieldName = 'z0'
       Origin = 'z0'
     end
   end
-  object FDMemTable1: TFDMemTable
+  object FDMemTable: TFDMemTable
     Active = True
     FieldDefs = <
       item
@@ -196,40 +196,40 @@ object Form1: TForm1
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
     StoreDefs = True
-    Left = 288
+    Left = 294
     Top = 184
   end
-  object FDLocalSQL1: TFDLocalSQL
-    Connection = FDConnection1
+  object FDLocalSQL: TFDLocalSQL
+    Connection = FDConnection
     Active = True
     DataSets = <
       item
-        DataSet = FDMemTable1
+        DataSet = FDMemTable
         Name = 'StarData'
       end>
-    Left = 304
+    Left = 295
     Top = 120
   end
-  object FDConnection1: TFDConnection
+  object FDConnection: TFDConnection
     Params.Strings = (
       'DriverID=SQLite')
     LoginPrompt = False
     Left = 296
     Top = 56
   end
-  object FDGUIxWaitCursor1: TFDGUIxWaitCursor
+  object FDGUIxWaitCursor: TFDGUIxWaitCursor
     Provider = 'Forms'
-    Left = 304
-    Top = 240
+    Left = 295
+    Top = 246
   end
-  object FDQuery2: TFDQuery
-    Connection = FDConnection1
+  object FDQueryData2: TFDQuery
+    Connection = FDConnection
     SQL.Strings = (
       'select count(*) as cnt '
       'from StarData')
     Left = 160
     Top = 152
-    object FDQuery2cnt: TLargeintField
+    object FDQueryData2cnt: TLargeintField
       AutoGenerateValue = arDefault
       FieldName = 'cnt'
       Origin = 'cnt'

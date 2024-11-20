@@ -21,18 +21,18 @@ type
     btnFieldReferences: TButton;
     btnGenerate: TButton;
     btnIndexedFields: TButton;
-    FDConnection1: TFDConnection;
-    FDGUIxWaitCursor1: TFDGUIxWaitCursor;
-    FDLocalSQL1: TFDLocalSQL;
-    FDMemTable1: TFDMemTable;
-    FDQuery1: TFDQuery;
-    FDQuery1_id: TLargeintField;
-    FDQuery1_name: TWideStringField;
-    FDQuery1_x0: TFloatField;
-    FDQuery1_y0: TFloatField;
-    FDQuery1_z0: TFloatField;
-    FDQuery2: TFDQuery;
-    FDQuery2cnt: TLargeintField;
+    FDConnection: TFDConnection;
+    FDGUIxWaitCursor: TFDGUIxWaitCursor;
+    FDLocalSQL: TFDLocalSQL;
+    FDMemTable: TFDMemTable;
+    FDQueryData: TFDQuery;
+    FDQueryData_id: TLargeintField;
+    FDQueryData_name: TWideStringField;
+    FDQueryData_x0: TFloatField;
+    FDQueryData_y0: TFloatField;
+    FDQueryData_z0: TFloatField;
+    FDQueryData2: TFDQuery;
+    FDQueryData2cnt: TLargeintField;
     ListBoxData: TListBox;
     MemoLog: TMemo;
     PanelButtons: TPanel;
@@ -128,17 +128,17 @@ procedure TForm1.btnFieldByNameClick(Sender: TObject);
 begin
   StartTimer(Sender);
   try
-    while not FDQuery1.Eof do
+    while not FDQueryData.Eof do
     begin
       var calcDist := Sqrt(
-          Sqr(FDQuery1.FieldByName('x0').AsFloat) +
-          Sqr(FDQuery1.FieldByName('y0').AsFloat) +
-          Sqr(FDQuery1.FieldByName('z0').AsFloat));
+          Sqr(FDQueryData.FieldByName('x0').AsFloat) +
+          Sqr(FDQueryData.FieldByName('y0').AsFloat) +
+          Sqr(FDQueryData.FieldByName('z0').AsFloat));
 
       if calcDist > 1000 then
-        ListBoxData.Items.Add(FDQuery1.FieldByName('Name').AsString);
+        ListBoxData.Items.Add(FDQueryData.FieldByName('Name').AsString);
 
-      FDQuery1.Next;
+      FDQueryData.Next;
     end;
   finally
     EndTimer;
@@ -149,17 +149,17 @@ procedure TForm1.btnIndexedFieldsClick(Sender: TObject);
 begin
   StartTimer(Sender);
   try
-    while not FDQuery1.Eof do
+    while not FDQueryData.Eof do
     begin
       var calcDist := Sqrt(
-          Sqr(FDQuery1.Fields[2].AsFloat) +
-          Sqr(FDQuery1.Fields[3].AsFloat) +
-          Sqr(FDQuery1.Fields[4].AsFloat));
+          Sqr(FDQueryData.Fields[2].AsFloat) +
+          Sqr(FDQueryData.Fields[3].AsFloat) +
+          Sqr(FDQueryData.Fields[4].AsFloat));
 
       if calcDist > 1000 then
-        ListBoxData.Items.Add(FDQuery1.Fields[1].AsString);
+        ListBoxData.Items.Add(FDQueryData.Fields[1].AsString);
 
-      FDQuery1.Next;
+      FDQueryData.Next;
     end;
   finally
     EndTimer;
@@ -168,30 +168,28 @@ end;
 
 procedure TForm1.btnGenerateClick(Sender: TObject);
 begin
-  Randomize;
-
-  Cursor := crSQLWait;
-  Enabled := False;
+  Screen.Cursor := crHourGlass;
   try
-    FDMemTable1.Close;
-    FDMemTable1.CreateDataSet;
+    Enabled := False;
+    FDQueryData.Close;
+    FDQueryData.CreateDataSet;
 
     for var Index := 1 to SpinEditRowCount.Value do
-      FDMemTable1.InsertRecord(
+      FDQueryData.InsertRecord(
         [Index, GenerateStarName,
-         random * Random(900),
-         random * Random(900),
-         random * Random(900)]);
+         Random * Random(900),
+         Random * Random(900),
+         Random * Random(900)]);
 
-    FDMemTable1.SaveToFile(C_SampleData, sfBinary);
-    FDLocalSQL1.Active := True;
+    FDMemTable.SaveToFile(C_SampleData, sfBinary);
+    FDLocalSQL.Active := True;
 
-    FDQuery1.Open; // pre-cache
-    FDQuery2.Open;
+    FDQueryData.Open; // pre-cache
+    FDQueryData2.Open;
 
-    Log(FormatFloat('#,##0', FDQuery2cnt.AsInteger) + ' records generated', 1);
+    Log(FormatFloat('#,##0', FDQueryData2cnt.AsInteger) + ' records generated', 1);
   finally
-    Cursor := crDefault;
+    Screen.Cursor := crDefault;
     Enabled := True;
   end;
 end;
@@ -200,12 +198,12 @@ procedure TForm1.btnFieldReferencesClick(Sender: TObject);
 begin
   StartTimer(Sender);
   try
-    var x0_field := FDQuery1.FieldByName('x0');
-    var y0_field := FDQuery1.FieldByName('y0');
-    var z0_field := FDQuery1.FieldByName('z0');
-    var name_field := FDQuery1.FieldByName('name');
+    var x0_field := FDQueryData.FieldByName('x0');
+    var y0_field := FDQueryData.FieldByName('y0');
+    var z0_field := FDQueryData.FieldByName('z0');
+    var name_field := FDQueryData.FieldByName('name');
 
-    while not FDQuery1.Eof do
+    while not FDQueryData.Eof do
     begin
       var calcDist := Sqrt(
           Sqr(x0_field.AsFloat) +
@@ -215,7 +213,7 @@ begin
       if calcDist > 1000 then
         ListBoxData.Items.Add(name_field.AsString);
 
-      FDQuery1.Next;
+      FDQueryData.Next;
     end;
   finally
     EndTimer;
@@ -226,17 +224,17 @@ procedure TForm1.btnDesignTimeFieldsClick(Sender: TObject);
 begin
   StartTimer(Sender);
   try
-    while not FDQuery1.Eof do
+    while not FDQueryData.Eof do
     begin
       var calcDist := Sqrt(
-          Sqr(FDQuery1_x0.AsFloat) +
-          Sqr(FDQuery1_y0.AsFloat) +
-          Sqr(FDQuery1_z0.AsFloat));
+          Sqr(FDQueryData_x0.AsFloat) +
+          Sqr(FDQueryData_y0.AsFloat) +
+          Sqr(FDQueryData_z0.AsFloat));
 
       if calcDist > 1000 then
-        ListBoxData.Items.Add(FDQuery1_Name.AsString);
+        ListBoxData.Items.Add(FDQueryData_Name.AsString);
 
-      FDQuery1.Next;
+      FDQueryData.Next;
     end;
   finally
     EndTimer;
@@ -247,7 +245,7 @@ procedure TForm1.EndTimer;
 begin
   FStopWatch.Stop;
 
-  FDQuery1.Close;
+  FDQueryData.Close;
 
   Log('Count: ' + ListBoxData.Count.ToString, 1);
   Log('Elapsed time: ' + FormatFloat('#,##0.00 ms', FStopWatch.Elapsed.Milliseconds), 1);
@@ -258,28 +256,35 @@ end;
 
 procedure TForm1.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 begin
-  FDQuery1.Close;
+  FDQueryData.Close;
 
-  FDLocalSQL1.Active := False;
+  FDLocalSQL.Active := False;
 
-  FDMemTable1.Close;
-  FDConnection1.Close;
+  FDMemTable.Close;
+  FDConnection.Close;
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
-  if FileExists(C_SampleData) then
-  begin
-    FDMemTable1.LoadFromFile(C_SampleData,sfBinary);
+  Randomize;
 
-    FDQuery1.Open; // pre-cache
-    FDQuery2.Open;
-    Log(FormatFloat('#,##0', FDQuery2cnt.AsInteger) + ' records loaded', 1);
-  end
-  else
-    Log('NO records loaded!', 1);
+  Screen.Cursor := crHourGlass;
+  try
+    if FileExists(C_SampleData) then
+    begin
+      FDMemTable.LoadFromFile(C_SampleData,sfBinary);
 
-  Log('-----');
+      FDQueryData.Open; // pre-cache
+      FDQueryData2.Open;
+      Log(FormatFloat('#,##0', FDQueryData2cnt.AsInteger) + ' records loaded', 1);
+    end
+    else
+      Log('NO records loaded!', 1);
+
+    Log('-----');
+  finally
+    Screen.Cursor := crDefault;
+  end;
 end;
 
 procedure TForm1.Log(const ALogMessage: string; const AIndent: Integer);
@@ -289,7 +294,7 @@ end;
 
 procedure TForm1.StartTimer(Sender: TObject);
 begin
-  FDQuery1.Open;
+  FDQueryData.Open;
 
   ListBoxData.Clear;
   Log((Sender as TButton).Caption);
