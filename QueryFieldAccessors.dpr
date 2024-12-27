@@ -2,7 +2,7 @@ program QueryFieldAccessors;
 
 uses
   Vcl.Forms,
-  QueryFieldAccessorsMain in 'QueryFieldAccessorsMain.pas' {Form1},
+  QueryFieldAccessorsMain in 'QueryFieldAccessorsMain.pas' {FormMain},
   Vcl.Themes,
   Vcl.Styles;
 
@@ -11,6 +11,6 @@ uses
 begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
-  Application.CreateForm(TForm1, Form1);
+  Application.CreateForm(TFormMain, FormMain);
   Application.Run;
 end.

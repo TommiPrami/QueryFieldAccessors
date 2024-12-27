@@ -58,7 +58,7 @@ type
   end;
 
 var
-  Form1: TForm1;
+  FormMain: TFormMain;
 
 implementation
 
@@ -129,7 +129,7 @@ begin
    Result := LPrefix + ' ' + LSuffix;
 end;
 
-procedure TForm1.btnFieldByNameClick(Sender: TObject);
+procedure TFormMain.btnFieldByNameClick(Sender: TObject);
 begin
   StartTimer(Sender);
   try
@@ -150,7 +150,7 @@ begin
   end;
 end;
 
-procedure TForm1.btnIndexedFieldsClick(Sender: TObject);
+procedure TFormMain.btnIndexedFieldsClick(Sender: TObject);
 begin
   StartTimer(Sender);
   try
@@ -171,7 +171,7 @@ begin
   end;
 end;
 
-procedure TForm1.btnGenerateClick(Sender: TObject);
+procedure TFormMain.btnGenerateClick(Sender: TObject);
 begin
   Screen.Cursor := crHourGlass;
   try
@@ -199,7 +199,7 @@ begin
   end;
 end;
 
-procedure TForm1.btnFieldReferencesClick(Sender: TObject);
+procedure TFormMain.btnFieldReferencesClick(Sender: TObject);
 begin
   StartTimer(Sender);
   try
@@ -225,7 +225,7 @@ begin
   end;
 end;
 
-procedure TForm1.btnDesignTimeFieldsClick(Sender: TObject);
+procedure TFormMain.btnDesignTimeFieldsClick(Sender: TObject);
 begin
   StartTimer(Sender);
   try
@@ -246,7 +246,7 @@ begin
   end;
 end;
 
-procedure TForm1.EndTimer;
+procedure TFormMain.EndTimer;
 begin
   FStopWatch.Stop;
 
@@ -269,7 +269,7 @@ begin
   FDConnection.Close;
 end;
 
-procedure TForm1.FormCreate(Sender: TObject);
+procedure TFormMain.FormCreate(Sender: TObject);
 begin
   Randomize;
 end;
@@ -291,7 +291,7 @@ begin
   FStopWatch := TStopwatch.StartNew;
 end;
 
-procedure TForm1.TimerAfterShowTimer(Sender: TObject);
+procedure TFormMain.TimerAfterShowTimer(Sender: TObject);
 begin
   TimerAfterShow.Enabled := False;
 
