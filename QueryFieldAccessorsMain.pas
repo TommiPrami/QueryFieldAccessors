@@ -90,7 +90,7 @@ begin
 
   for var LIndex := 1 to ACharCount do
   case LChosenAlphabetIndex of
-    0,1: Result := Result + ALIEN_ALPHABETS[LChosenAlphabetIndex][Random(Length(ALIEN_ALPHABETS[LChosenAlphabetIndex])) + 1];
+    0, 1: Result := Result + ALIEN_ALPHABETS[LChosenAlphabetIndex][Random(Length(ALIEN_ALPHABETS[LChosenAlphabetIndex])) + 1];
     2: Result := Result + Chr(ALIEN_ALPHABET_3CODES[Random(Length(ALIEN_ALPHABET_3CODES))]);
   end;
 end;
